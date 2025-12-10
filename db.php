@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $dbname = "chat_app";
-$username = "root";
-$password = "";
+$username = "root"; // Change if your DB user is different
+$password = "";     // Change if your DB password is different
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
