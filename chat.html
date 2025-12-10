@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chat Room</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Chat Room</h1>
+      <p id="user-info">Logged in as <strong id="username-display">User</strong> | <a href="logout.php">Logout</a></p>
+    </header>
+
+    <section class="send">
+      <form method="post" action="chat.php">
+        <input name="message" type="text" placeholder="Type your message" required autocomplete="off">
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    <section class="messages" id="messages">
+      <!-- Server will render messages here when chat.php returns HTML -->
+    </section>
+  </main>
+</body>
+</html>

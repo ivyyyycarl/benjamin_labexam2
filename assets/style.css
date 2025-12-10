@@ -1,0 +1,40 @@
+/* assets/style.css */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 18px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  h1 { margin-top: 0; }
+  form { margin-bottom: 16px; }
+  label { display: block; margin: 8px 0 4px; font-weight: bold; }
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  button {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover { background: #0056b3; }
+  .messages { border-top: 1px solid #eee; padding-top: 12px; max-height: 400px; overflow-y: auto; }
+  .msg { padding: 8px 0; border-bottom: 1px dashed #eee; }
+  .msg strong { color: #333; }
+  #user-info { font-size: 0.95em; color: #555; }
