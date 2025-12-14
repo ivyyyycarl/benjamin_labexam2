@@ -9,12 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Please fill out all fields.");
     }
 
-    // Hash the password for security
-    $hashed = password_hash($password, PASSWORD_DEFAULT);
-
+    // --- MODIFIED: Storing password in PLAIN TEXT as required by the exam ---
+    
     try {
         $stmt = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-        $stmt->execute([$username, $hashed]);
+        // EXECUTE with the raw $password variable
+        $stmt->execute([$username, $password]); 
         
         // Redirect to login page on success
         header("Location: login.html");

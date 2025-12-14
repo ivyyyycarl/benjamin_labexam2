@@ -58,18 +58,72 @@ $messages = $pdo->query("
     </section>
 
     <section class="send-message">
-        <form method="POST" action="chat.php">
-            <input name="message" type="text" placeholder="Type your message here..." required autocomplete="off">
-            <button type="submit">Send</button>
+        <form id="sendForm">
+            <input id="messageInput" name="message" type="text" placeholder="Type your message here..." required autocomplete="off">
+            <button id="sendBtn" type="submit">Send</button>
         </form>
     </section>
 </main>
 
 <script>
-    // Auto-scroll to bottom
-    document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
-    // Refresh chat every 2 seconds
-    setInterval(() => { location.reload(); }, 2000);
+    const messagesEl = document.getElementById('messages');
+    const form = document.getElementById('sendForm');
+    const input = document.getElementById('messageInput');
+
+    // Helper to render messages (replace contents)
+    function renderMessages(messages) {
+        messagesEl.innerHTML = '';
+        messages.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'msg';
+            const user = document.createElement('span');
+            user.className = 'user';
+            user.textContent = m.username;
+            const text = document.createElement('span');
+            text.className = 'text';
+            text.textContent = m.message;
+            div.appendChild(user);
+            div.appendChild(text);
+            messagesEl.appendChild(div);
+        });
+        // scroll to bottom
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    // Fetch latest messages from server
+    async function fetchMessages() {
+        try {
+            const res = await fetch('messages.php');
+            if (!res.ok) throw new Error('Network response was not ok');
+            const data = await res.json();
+            renderMessages(data);
+        } catch (err) {
+            console.error('Failed fetching messages', err);
+        }
+    }
+
+    // Send message via AJAX
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const msg = input.value.trim();
+        if (!msg) return;
+        try {
+            const res = await fetch('send_message.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ message: msg })
+            });
+            if (!res.ok) throw new Error('Send failed');
+            input.value = '';
+            await fetchMessages();
+        } catch (err) {
+            console.error('Failed to send message', err);
+        }
+    });
+
+    // Poll for new messages every 2s
+    fetchMessages();
+    setInterval(fetchMessages, 2000);
 </script>
 </body>
 </html>
